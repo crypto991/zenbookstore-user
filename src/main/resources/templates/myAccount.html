@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header"/>
+
+<body>
+
+<!--    Nav-->
+<div th:replace="common/header :: navbar"/>
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-8">
+            <h2><span class="badge badge-info">User Account</span></h2>
+        </div>
+
+        <div class="col-4">
+            <img th:src="@{/img/logo.png}" id="slika" class="img-fluid"/>
+        </div>
+    </div>
+
+    <hr style="height: 6px;background-color: #303841;"/>
+    <img class="img-fluid" th:src="@{/img/wood.png}"/>
+
+    <div class="row" style="margin-top: 60px;">
+        <div class="col-9 offset-3">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a style="color: #303841" class="nav-link" th:classappend="${classActiveNewAccount}? 'active'" id="cna-tab"
+                       data-toggle="tab" href="#cna" role="tab" aria-controls="cna" aria-selected="true">Create new
+                        account</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #303841" class="nav-link" th:classappend="${classActiveLogin}? 'active'" id="login-tab" data-toggle="tab"
+                       href="#login" role="tab" aria-controls="login" aria-selected="false">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #303841" class="nav-link" th:classappend="${classActiveForgotPassword}? 'active'" id="fgp-tab"
+                       data-toggle="tab" href="#fgp" role="tab" aria-controls="fgp" aria-selected="false">Forgot
+                        Password</a>
+                </li>
+            </ul>
+
+
+            <div class="tab-content" id="myTabContent">
+
+                <!--                Create new account-->
+
+                <div class="tab-pane fade" id="cna" role="tabpanel" aria-labelledby="cna-tab"
+                     th:classappend="${classActiveNewAccount}? 'show active'">
+                    <div class="card" style="border: none;">
+                        <div class="card-body" style="background-color: #ededed;">
+                            <div class="alert alert-info" th:if="${emailSent}">
+                                An email has been sent to the email address you just registred. Please confirm your
+                                email address and update your info.
+                            </div>
+
+                            <form th:action="@{/newUser}" method="post">
+                                <div class="form-group">
+                                    <label for="newUsername">* Username</label>
+                                    &nbsp;<span style="color: red;"
+                                                th:if="${usernameExists}">Username already exists. Choose a diffrent one.</span>
+                                    <input required="required" type="text" class="form-control" id="newUsername"
+                                           name="username"/>
+                                    <p style="color: #828282;">Enter your username here</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">* Email Address</label>
+                                    <span style="color: red;"
+                                                th:if="${emailExists}">Email already exists. Choose a diffrent one.</span>
+                                    <input required="required" type="text" class="form-control" id="email"
+                                           name="email"/>
+                                    <p style="color: #828282;">Enter a valid email here.The email address is not made
+                                        public and will only be used for your registration.</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-info btn-block">Create new account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                Login-->
+
+                <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab"
+                     th:classappend="${classActiveLogin}? 'show active'">
+                    <div class="card" style="border: none;">
+                        <div class="card-body" style="background-color: #ededed;">
+                            <div th:if="${param.error != null}" style="color:red;">Incorrect username or password.</div>
+                            <form th:action="@{/login}" method="post">
+                                <div class="form-group">
+                                    <label for="username">* Username</label>
+                                    <input required="required" type="text" class="form-control" id="username"
+                                           name="username"/>
+                                    <p style="color: #828282;">Enter your username here</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">* Password</label>
+                                    <input required="required" type="password" class="form-control" id="password"
+                                           name="password"/>
+                                    <p style="color: #828282;">Enter the password that matches your username</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-info btn-block">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                Forgot Password-->
+
+                <div class="tab-pane fade" id="fgp" role="tabpanel" aria-labelledby="fgp-tab"
+                     th:classappend="${classActiveForgotPassword}? 'show active'">
+                    <div class="card" style="border: none;">
+                        <div class="card-body" style="background-color: #ededed;">
+
+                            <div th:if="${emailNotExist}" class="alert alert-danger">Email doesn't exist!</div>
+                            <div th:if="${forgetPasswordEmailSent}" class="alert alert-success">Email sent.</div>
+
+                            <form th:action="@{/forgotPassword}" method="post">
+                                <div class="form-group">
+                                    <label for="recoverEmail">* Email</label>
+                                    <input required="required" type="text" class="form-control"
+                                           id="recoverEmail" name="email"/>
+                                    <p style="color: #828282;">Enter your registred email address here</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-outline-info btn-block">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+        <div th:replace="common/header :: body-bottom-scripts"/>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header"/>
+
+<body>
+<div th:replace="common/header :: navbar"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2><span class="badge badge-success">Hours & Directions</span></h2>
+
+        </div>
+        <div class="col-4">
+            <img src="/img/logo.png" class="img-fluid"/>
+        </div>
+    </div>
+    <hr style="height: 6px;background-color: #303841;"/>
+    <img class="img-fluid" src="/img/wood.png"/>
+
+    <div class="row" style="margin-top:-50px;margin-right: -50px">
+        <div class="col-9 offset-3">
+            <img style="border: 2px solid #303841;opacity: 0.8;" class="img-fluid" src="/img/hours.png"/>
+        </div>
+    </div>
+</div>
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+</body>
+</html>

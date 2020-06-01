@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="common-header">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Zen Book</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <!-- data table -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+
+
+    <script src="https://kit.fontawesome.com/24e3d24691.js" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+
+    <link rel="icon" href="/img/icon2.png"/>
+
+</head>
+<body>
+
+<div th:fragment="navbar">
+    <!--    Nav-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+        <div class="menu-container container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img style="border: 1px solid #303841;" th:src="@{/img/logo.png}" width="50" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbars"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse navbars" id="collapse_target1">
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" th:href="@{/bookshelf}" id="navbarDropdown"
+                           role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Books
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/bookshelf}">Browse the bookshelf</a>
+                            <a class="dropdown-item" th:href="@{/hours}">Store hours &#38; Directions</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/faq}">FAQ</a>
+                        </div>
+                    </li>
+                    <form class="form-inline my-lg-0" th:action="@{/searchBook}" method="post">
+                        <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Book title"
+                               aria-label="Search">
+                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse navbars" id="collapse_target2">
+
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item"><a class="nav-link" th:href="@{/shoppingCart/cart}">SHOPPING CART</a></li>
+                    <li class="nav-item"><a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/login}">MY
+                        ACCOUNT</a></li>
+                    <li class="nav-item"><a sec:authorize="isAuthenticated()" class="nav-link"
+                                            th:href="@{/myProfile}">MY
+                        ACCOUNT</a></li>
+                    <li class="nav-item"><a sec:authorize="isAuthenticated()" class="nav-link"
+                                            th:href="@{/logout}">LOGOUT</a></li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <div class="page-top" style="width: 100%; height: 110px; background-color: #f3f3f3;"></div>
+
+</div>
+
+<div th:fragment="footer">
+    <!-- Footer -->
+    <footer class="pt-5 pb-4" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
+                    <h5 class="mb-4 font-weight-bold">ABOUT US</h5>
+                    <ul class="f-address">
+                        <li>
+                            <div class="row">
+                                <div class="col-1"><i class="fas fa-map-marker"></i></div>
+                                <div class="col-10">
+                                    <h6 class="font-weight-bold mb-0">Address:</h6>
+                                    <p>Preradoviceva 15, Novi Sad RS, 21000</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-1"><i class="far fa-envelope"></i></div>
+                                <div class="col-10">
+                                    <h6 class="font-weight-bold mb-0">Have any questions?</h6>
+                                    <p><a href="#">support@zenbook.com</a></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-1"><i class="fas fa-phone-volume"></i></div>
+                                <div class="col-10">
+                                    <h6 class="font-weight-bold mb-0">Phone:</h6>
+                                    <p><a href="#">(RS) : +381 21 555 123</a></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
+                    <h5 class="mb-4 font-weight-bold">LINKS</h5>
+                    <ul class="f-address">
+                        <li><a href="#"> Privacy Policy</a></li>
+                        <br/>
+                        <li><a href="#"> Terms &#38; Conditions</a></li>
+                        <br/>
+                        <li><a href="#"> Frequently Ask Questions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
+                    <h5 class="mb-4 font-weight-bold">STORE HOURS</h5>
+                    <ul class="recent-post">
+                        <li>
+                            <span>Monday - Saturday: 9am - 11pm</span>
+                        </li>
+                        <li>
+                            <span>Sunday: 10am - 10pm</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 mt-2 mb-4">
+                    <h5 class="mb-4 font-weight-bold">CONNECT WITH US</h5>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Your Email Address">
+                        <button class="btn btn-primary btn-sm" type="submit" id="basic-addon2"><i
+                                class="fas fa-check"></i></button>
+                    </div>
+                    <ul class="social-pet mt-4">
+                        <li><a href="#" title="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" title="twitter"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" title="google-plus"><i class="fab fa-google-plus-g"></i></a></li>
+                        <li><a href="#" title="instagram"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Copyright -->
+    <section class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="text-center text-white">
+                        &copy; 2018 Your Company. All Rights Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div th:fragment="body-bottom-scripts">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+
+    <script th:src="@{/js/scripts.js}"></script>
+    <!-- data table -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+</div>
+</body>
+</html>

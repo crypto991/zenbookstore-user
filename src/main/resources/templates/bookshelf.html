@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="common/header :: common-header"/>
+
+<body>
+
+<!--    Nav-->
+<div th:replace="common/header :: navbar"/>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-8">
+            <h2>
+                <span th:text="${user}? ${#strings.toUpperCase(user.username)} : 'All Books'"
+                      class="badge badge-info"></span></h2>
+        </div>
+        <div class="col-4">
+            <img th:src="@{/img/logo.png}" id="slika" class="img-fluid"/>
+        </div>
+    </div>
+
+    <hr style="height: 6px;background-color: #303841;"/>
+    <img class="img-fluid" th:src="@{/img/wood.png}"/>
+
+
+    <div class="row" style="margin-top: 60px;">
+        <div class="col-3">
+            <h3><label for="category">Category</label></h3>
+            <div class="list-group" id="category">
+                <a th:href="@{/bookshelf(category='all')}" th:classappend="${activeAll}? 'active'"
+                   class="list-group-item list-group-item-light">All</a>
+                <a th:href="@{/searchByCategory(category='Management')}" th:classappend="${activeManagement}? 'active'"
+                   class="list-group-item list-group-item-light">Management</a>
+                <a th:href="@{/searchByCategory(category='Fiction')}" th:classappend="${activeFiction}? 'active'"
+                   class="list-group-item list-group-item-light">Fiction</a>
+                <a th:href="@{/searchByCategory(category='Engineering')}"
+                   th:classappend="${activeEngineering}? 'active'" class="list-group-item list-group-item-light">Engineering</a>
+                <a th:href="@{/searchByCategory(category='Programming')}"
+                   th:classappend="${activeProgramming}? 'active'" class="list-group-item list-group-item-light">Programming</a>
+                <a th:href="@{/searchByCategory(category='Arts &amp; Literature')}"
+                   th:classappend="${activeArtsLiterature}? 'active'" class="list-group-item list-group-item-light">Arts
+                    &amp; Literature</a>
+            </div>
+        </div>
+
+        <div class="col-9">
+            <div th:if="${emptyList}">
+                <h5 style="font-style: italic;">Oops, no result is found. Try
+                    something else or try again later.</h5>
+            </div>
+
+            <table border="0" id="bookList">
+                <thead>
+                <tr>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="book-item" th:each="book : ${bookList}">
+                    <td th:if="${book != null}">
+                        <div class="row" style="margin-bottom: 50px;">
+                            <div class="col-3">
+                                <a th:href="@{/bookDetail?id=}+${book.id}">
+                                    <img class="img-fluid shelf-book"
+                                        th:src="@{/s3/image/{id}(id=${book.id})}"/></a>
+                            </div>
+                            <div class="col-9">
+                                <a th:href="@{/bookDetail?id=}+${book.id}"><h4
+                                        th:text="${book.title}"></h4></a> <span
+                                    th:text="${book.publicationDate}"></span>
+                                <p th:text="${book.author}"></p>
+                                <a th:href="@{/bookDetail?id=}+${book.id}"><span
+                                        th:text="${#strings.capitalize(book.format)}"></span></a> <span
+                                    th:text="${book.numberOfPages}"><span> pages</span></span><br/>
+
+                                <a th:href="@{/bookDetail?id=}+${book.id}"><span
+                                        style="font-size: x-large; color: #db3208;">$<span
+                                        th:text="${#numbers.formatDecimal(book.ourPrice, 0 , 'COMMA', 2, 'POINT')}"></span></span></a>
+
+                                <span style="text-decoration: line-through;">$<span
+                                        th:text="${#numbers.formatDecimal(book.listPrice, 0 , 'COMMA', 2, 'POINT')}"></span></span>
+                            </div>
+                        </div>
+                        <hr style="height: 2px"/>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end of container -->
+<div th:replace="common/header :: footer"/>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+<script>
+    $(document).ready(function () {
+        $('#bookList').DataTable({
+            "lengthMenu": [5, 10, 30, 50, 100],
+            "ordering": false,
+            stateSave: true
+        });
+
+        $("#bookList").on('page.dt', function () {
+            $('html, body').animate({
+                scrollTop: $('#bookList').offset().top
+            }, 200);
+        });
+    });
+</script>
+</body>
+</body>
+</html>
